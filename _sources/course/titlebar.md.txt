@@ -1,0 +1,71 @@
+# 如何使用标题栏
+标题栏指的就是应用程序窗口上方的位置，它可以用来拖动窗口移动，控制窗口进行关闭、最大化、最小化和一些快捷操作，使我们的做出的应用程序更加好用。
+
+---
+
+而tkinterDev中也为此做了一个组件，叫做`DevHeaderBar`，经过两代迭代，已经十分完美了。
+它的上一代叫做`DevTitleBar`，现已弃用，因为`DevTitleBar`太复杂，太麻烦，并且不能使用贴靠窗口。
+而`DevHeaderBar`完美解决了这个问题，使用win32代码将标题栏绑定移动窗口的消息，使它能像正常窗口一样贴靠窗口。
+
+好吧，现在步入正题，导入所需要的组件。除了`DevHeaderBar`，还需要`DevWindow`的支持，可以快速地进行放置标题栏。
+
+我们先创建一个.py文件，暂时将它命名为demo.py文件。
+```python
+from tkdev import DevHeaderBar, DevWindow
+import tkinter
+```
+先创建一个窗口，并且创建标题栏。
+```python
+Window = DevWindow()
+TitleBar = DevHeaderBar(Window)
+```
+在DevWindow里面有个`titlebar`的方法，可以用于设置标题栏组件。
+```python
+Window.titlebar(TitleBar)
+```
+现在已经将标题栏放入窗口最上方了，但还缺少一步，消息循环窗口，使窗口显示。
+```python
+Window.mainloop()
+```
+最后来运行窗口，查看效果
+```bash
+python -m demo.py
+```
+> 因为标题栏和窗口的颜色一模一样，所有看起来没有标题栏，但是他是真实存在的，你可以拖动一下窗口的上方看看
+
+## 扩展
+我们这个窗口什么也不也不行，所以要给它添加几个标题栏按钮。
+在`HeaderBar`有几个叫做`add_close_button()`、`add_max_button()`
+
+我们在代码中加上几行代码就可以添加好标题栏的关闭按钮、最大化按钮、最小化按钮。
+```python
+TitleBar.add_close_button()
+TitleBar.add_maximize_button()
+TitleBar.add_minimize_button()
+```
+这样一个最最普通的自定义窗口就已经制作完成了，接下来我们要来在标题栏上添加标题，不然就这几个按钮也没什么作用。
+对于标题我还没有做，但是可以自定义，因为`DevHeaderBar`实际上就是一个容器，在里面放入Label组件即可。
+但是因为Title与标题栏的背景颜色，不相符，我们可以将标题的背景颜色设置为标题栏的背景颜色
+
+```python
+Title = tkinter.Label(TitleBar, text="标题", anchor="center")
+Title.configure(background=TitleBar["background"])
+Title.pack(fill="y", side="left", padx=5)
+```
+
+## 预览最终效果
+```python
+from tkdev import DevHeaderBar, DevWindow
+import tkinter
+
+Window = DevWindow()
+TitleBar = DevHeaderBar(Window)
+TitleBar.add_close_button()
+TitleBar.add_maximize_button()
+TitleBar.add_minimize_button()
+Title = tkinter.Label(TitleBar, text="标题", anchor="center")
+Title.configure(background=TitleBar["background"])
+Title.pack(fill="y", side="left", padx=5)
+Window.titlebar(TitleBar)
+Window.mainloop()
+```

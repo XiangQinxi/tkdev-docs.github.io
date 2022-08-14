@@ -1,0 +1,15 @@
+# 使用说明
+
+---
+
+## 导入注意实现
+按照传统库名，导入的名字应该和tkinterDev库名一样，叫做tkinterDev导入，可是发现这个名字太长了就将它改名为tkdev。
+所以我们需要按照以下代码进行导入
+```python
+import tkdev
+```
+并且如果你想以`from tkdev import xxx`导入时，请不要使用`from tkdev import *`因为如果与其它库的组件名称相同的话，可能会出现无法估计的后果。
+
+## 关于Python2.x为什么不支持
+对于`Python2.x`不支持，所在于现在最流行使用`Python3.x`，而`Python2.x`本人不会，而一些依赖库也是一样不支持`Python2.x`开发。
+所以，我没那么多必要去开发对`Python2.x`的支持，请使用Python3.x进行开发。
